@@ -1,4 +1,3 @@
-
 (function(root, factory){
   'use strict';
   if (typeof exports === 'object') {
@@ -225,7 +224,6 @@
   Grunge.prototype.first = function(num){
     return this.take(num).toArray();
   };
-
 
 
   /*
