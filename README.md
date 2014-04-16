@@ -13,7 +13,7 @@ In terms of the utility functions Grunge takes an approach closes to Lazy.js rat
 **Note:** Grunge is an expreiment library in an early stage of it's development. There probably will be bugs, and it is by no means ready for production. Tests, bug-fixes and enhancements are welcome.
 
 ## Why Generators?
-Generators are slowly funding support and are already available in Chrome, Firefox and Node 0.11.x. Moreover with many transpilers it's easy to convert Grunge into ES5 compliant code. (I will soon add a ES5 distribution ready to use, and available on various Package Managers)
+Generators are slowly finding support and are already available in Chrome, Firefox and Node 0.11.x. Moreover with many transpilers it's easy to convert Grunge into ES5 compliant code. (I will soon add a ES5 distribution ready to use, and available on various Package Managers)
 
 Grunge *could* be written without generators, but the code would be longer and more complicated. And again, with the availability of transpilers, I think the expressiveness of the code is more important.
 
