@@ -29,7 +29,7 @@ var result = Grunge([1,2,3,4,5]).map(function(n){return n*n;}).map(function(n){r
 var result = Grunge(1,1).map(function(n){return n*n;}).map(function(n){return n+1}).filter(isPrime).take(5).toArray();
 ```
 
-Things can get more interesting when you start feeding generator functions into Grunge
+Things can get more interesting when you start feeding generator functions into Grunge.
 
 ```
 var fibinacciSquaredFiltered = Grunge(function*(){
