@@ -96,6 +96,27 @@
 
   };
 
+  Grunge.prototype.skip = function(num){
+    if(!Grunge.isNaturalNumber(num)){
+      throw new Error("skip takes a natural number");
+    }
+    var that = this;
+
+    var newGrunge = new Grunge(function* (){
+      var i = 0;
+      for(let elem of that.generator()){
+        i++;
+        if(i > num){
+          yield elem;
+        }
+      }
+    });
+    if(!!this.length){
+      newGrunge.length = Math.min(this.length - num, 0);
+    }
+    return newGrunge;
+  }
+
 
   Grunge.prototype.step = function(num){
     if(!num || num === 1){
