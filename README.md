@@ -10,7 +10,7 @@ Grunge should be your go to library for creating non-trivial sequences, when you
 Underscore and Lazy.js have great tools for dealing with finite collection of numbers. Grunge is there to tackle infinite sequences. e.g fibonacci numbers, prime numbers etc.
 In terms of the utility functions Grunge takes an approach closer to Lazy.js rather than Underscore, and no actual computation is done till you ask for values.
 
-**Note:** Grunge is an expreimental library in an early stage of development. There probably will be bugs, and it is by no means ready for production. Tests, bug-fixes and enhancements are welcome.
+**Note:** Grunge is an experimental library in an early stage of development. There probably will be bugs, and it is by no means ready for production. Tests, bug-fixes and enhancements are welcome.
 
 ## Why Generators?
 Generators are slowly finding support and are already available in Chrome, Firefox and Node 0.11.x. Moreover with many transpilers it's easy to convert Grunge into ES5 compliant code. (I will soon add a ES5 distribution ready to use, and available on various Package Managers)
