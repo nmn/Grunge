@@ -7,8 +7,7 @@ A generator-based sequence generator and utility.
 Grunge is inspired by Ruby's Range Class, Underscore.js and Lazy.js, it implements parts of all three and some other things.
 Grunge should be your go to library for creating non-trivial sequences, when you need maximum performance.
 
-Underscore and Lazy.js have great tools for dealing with finite collection of numbers. Grunge is there to tackle infinite sequences. e.g fibonacci numbers, prime numbers etc.
-In terms of the utility functions Grunge takes an approach closer to Lazy.js rather than Underscore, and no actual computation is done till you ask for values.
+While Underscore and Lazy.js handle very well finite collections of numbers, Grunge tackles infinite sequences like  fibonacci and prime numbers. However Grunge is more similar to Lazy.js than to Underscore for utility functions because no actual computation is done until values are asked for (known as deferred execution).
 
 **Note:** Grunge is an experimental library in an early stage of development. There probably will be bugs, and it is by no means ready for production. Tests, bug-fixes and enhancements are welcome.
 
