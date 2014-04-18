@@ -12,6 +12,14 @@ In terms of the utility functions Grunge takes an approach closer to Lazy.js rat
 
 **Note:** Grunge is an experimental library in an early stage of development. There probably will be bugs, and it is by no means ready for production. Tests, bug-fixes and enhancements are welcome.
 
+## Installation
+On the browser, you can just download the index.js file from right here and use it.
+For Node
+```
+npm install grunge
+```
+should work!
+
 ## Why Generators?
 Generators are slowly finding support and are already available in Chrome, Firefox and Node 0.11.x. Moreover with many transpilers it's easy to convert Grunge into ES5 compliant code. (I will soon add a ES5 distribution ready to use, and available on various Package Managers)
 
