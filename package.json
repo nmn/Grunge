@@ -1,5 +1,5 @@
 {
-  "name": "Grunge.js",
+  "name": "grunge",
   "version": "0.0.5",
   "description": "A generator-based sequence generator and utility.",
   "main": "index.js",
