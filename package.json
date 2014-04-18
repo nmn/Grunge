@@ -1,0 +1,29 @@
+{
+  "name": "Grunge.js",
+  "version": "0.0.5",
+  "description": "A generator-based sequence generator and utility.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: Tests coming soon\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naman34/Grunge.git"
+  },
+  "keywords": [
+    "Generators",
+    "Javascript",
+    "Underscore",
+    "Sequences",
+    "LowDash",
+    "Lazy",
+    "Infinite",
+    "ES6"
+  ],
+  "author": "Naman Goel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naman34/Grunge/issues"
+  },
+  "homepage": "https://github.com/naman34/Grunge"
+}
