@@ -15,11 +15,13 @@
 })(this, function(){
   'use strict';
 
-  var Grunge = function(start, step){
+  // only pass in x when step is a function
+  // pass in x for memory concerns if you don't always need the whole array.
+  var Grunge = function(start, step, x){
 
     // protection against using the class without the new keyword
     if(!(this instanceof Grunge)){
-      return new Grunge(start, step);
+      return new Grunge(start, step, x);
     }
 
     //if no arguments are passed, return an empty Object
@@ -31,6 +33,26 @@
     if((start instanceof Grunge) && (typeof step === 'number')){
       //call .step on the object and return that
       return start.step(step);
+    }
+
+    // accepting a 'step' function. Takes a value and returns the next value. gets three values (value, index, arrayOfLast 10 values)
+    if(typeof step === 'function'){
+      //x = (x && x > 0) ? x : 10;
+      this.generator = function* (){
+        var currValue = start;
+        var index = 0;
+        var valuesSoFar = [];
+        while(true){
+          yield currValue;
+          valuesSoFar.push(currValue);
+          if(x && x > 0 && valuesSoFar.length > x){
+            valuesSoFar.shift();
+          }
+          currValue = step(currValue, index, valuesSoFar);
+          index ++;
+        };
+      };
+      return this;
     }
 
     //if an array is passed in iterate over the elements.
@@ -69,7 +91,7 @@
             }
             return elem.value;
           } catch (e){
-            return;
+            return e;
           }
         };
         if(!!step){
@@ -100,17 +122,44 @@
     if(!Grunge.isNaturalNumber(num)){
       throw new Error("skip takes a natural number");
     }
+
+
     var that = this;
 
+    // Old version with for-of loops
+    // var newGrunge = new Grunge(function* (){
+    //   var i = 0;
+    //   for(let elem of that.generator()){
+    //     i++;
+    //     if(i > num){
+    //       yield elem;
+    //     }
+    //   }
+    // });
+
+
     var newGrunge = new Grunge(function* (){
-      var i = 0;
-      for(let elem of that.generator()){
-        i++;
-        if(i > num){
-          yield elem;
+      try {
+        var startIterator = that.generator();
+        var elem = startIterator.next();
+        var i = 0;
+        while(elem.done === false){
+          if(i >= num){
+            yield elem.value;
+          }
+          elem = startIterator.next();
+          i++;
         }
+        if(i > num) {
+          return elem.value;
+        } else {
+          return;
+        }
+      } catch (e){
+        return e;
       }
     });
+
     if(!!this.length){
       newGrunge.length = Math.min(this.length - num, 0);
     }
@@ -119,7 +168,7 @@
 
 
   Grunge.prototype.step = function(num){
-    if(!num || num === 1){
+    if(!num || num === 0){
       return this;
     }
     if(typeof num !== 'number' && typeof num !== 'function'){
@@ -161,11 +210,30 @@
     if(!func){
       return this;
     }
+    // Old version with for-of loops
+    // var newGrunge = new Grunge(function* (){
+    //   for(let elem of that.generator()){
+    //     yield func(elem);
+    //   }
+    // });
+
+
     var newGrunge = new Grunge(function* (){
-      for(let elem of that.generator()){
-        yield func(elem);
+      try {
+        var startIterator = that.generator();
+        var i = 0;
+        var elem = startIterator.next();
+        while(elem.done === false) {
+          yield func(elem.value, i);
+          elem = startIterator.next();
+          i++;
+        }
+        return func(elem.value, i);
+      } catch (e){
+        return e;
       }
     });
+
     newGrunge.length = this.length;
     return newGrunge;
   };
@@ -176,13 +244,35 @@
     if(!func){
       return this;
     }
+    // Old version with For-of loops
+    // var newGrunge = new Grunge(function* (){
+    //   for(let elem of that.generator()){
+    //     if(!!func(elem)){
+    //       yield elem;
+    //     }
+    //   }
+    // });
+
     var newGrunge = new Grunge(function* (){
-      for(let elem of that.generator()){
-        if(!!func(elem)){
-          yield elem;
+      try {
+        var startIterator = that.generator();
+        var i = 0;
+        var elem = startIterator.next();
+        while(elem.done === false){
+          if(!!func(elem.value, i)){
+            yield elem.value;
+          }
+          i++;
+          elem = startIterator.next();
         }
+        if(!!func(elem.value, i)){
+          return elem.value;
+        }
+      } catch (e){
+        return e;
       }
     });
+
     newGrunge.length = this.length;
     return newGrunge;
   };
@@ -219,8 +309,25 @@
     if(!func){
       return this;
     }
-    for(let elem of this.generator()){
-      func(elem);
+    // old version with for-of loops
+    // for(let elem of this.generator()){
+    //   func(elem);
+    // }
+
+
+    try {
+      var startIterator = this.generator();
+      var i = 0;
+      var elem = startIterator.next();
+      while(elem.done === false){
+        func(elem.value, i);
+        elem = startIterator.next();
+        i++;
+      }
+      // not sure why this is happening
+      //func(elem.value, i);
+    } catch (e){
+      return e;
     }
   };
 
