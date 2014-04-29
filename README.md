@@ -74,7 +74,7 @@ var fibinacciSquaredFiltered = Grunge(function*(){
 }).map(function(n){return n*n;}).filter(function(n){return n%2 !== 0;}).step(3).take(100).toArray();
 ```
 
-Here you have an infinite sequence of fibinacci numbers, you can map each of them to squares, filter out all the even numbers, then pick every third element, and finally get hundred such elements.
+Here you have an infinite sequence of fibonacci numbers, you can map each of them to squares, filter out all the even numbers, then pick every third element, and finally get hundred such elements.
 
 Another situation where this might be useful is generating Prime numbers.
 
