@@ -331,14 +331,24 @@
     }
   };
 
-  Grunge.prototype.reduce = function(startValue, func){
-    if(startValue === undefined){
-      startValue = this.generator().next();
+  Grunge.prototype.reduce = function(count, func, startValue){
+
+    if(typeof count === 'function'){
+      // implement old boring reduce
+
+      startValue = func;
+      func = count;
+
+      if(startValue === undefined){
+        startValue = this.generator().next();
+      }
+      this.forEach(function(elem){
+        startValue = func(elem, startValue);
+      });
+      return startValue;
     }
-    this.forEach(function(elem){
-      startValue = func(elem, startValue);
-    });
-    return startValue;
+
+    // the new reduce every x elements method goes here
   };
 
   Grunge.prototype.toArray = function(){
