@@ -331,21 +331,54 @@
     }
   };
 
-  Grunge.prototype.reduce = function(startValue, func){
-    if(startValue === undefined){
-      startValue = this.generator().next();
+  Grunge.prototype.reduce = function(count, func, startValue){
+    if(typeof count === 'function'){
+      if(!this.length){
+        throw new Error('Cannot Loop over infinite sequence');
+      }
+      if(startValue === undefined){
+        startValue = this.generator().next().value;
+      }
+      this.forEach(function(elem){
+        startValue = func(elem, startValue);
+      });
+      return startValue;
+    } else {
+      if(!Grunge.isNaturalNumber(count)){
+        throw new Error('the first argument must be a natural number for this to work');
+      }
+      if(startValue === undefined){
+        startValue = this.generator().next().value;
+      }
+      var newGrunge = new Grunge(function* () {
+        var iterator = this.generator();
+        var temp = startValue;
+        var lastValue;
+        while(true){
+          for(var i = 0; i < count; i++){
+            lastValue = iterator.next();
+            temp = func(lastValue.value, startValue);
+            if(lastValue.done){
+              break;
+            }
+          }
+          yield temp;
+          temp = lastValue.value;
+          if(lastValue.done){
+            break;
+          }
+        }
+      });
+      if(this.length) {
+        newGrunge.length = Math.ceil(this.length/count);
+      }
+      return newGrunge;
     }
-    this.forEach(function(elem){
-      startValue = func(elem, startValue);
-    });
-    return startValue;
   };
 
   Grunge.prototype.toArray = function(){
     var result = [];
-    for(let elem of this.generator()){
-      result.push(elem);
-    }
+    this.forEach(result.push.bind(result));
     return result;
   };
 
