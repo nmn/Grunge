@@ -55,6 +55,8 @@ var rps = Grunge([['rock'], ['paper'], ['scissors']], function(el){
 ```
 Here are you are solving for all possible moves in a game of Rock Paper Scissors in three games, by starting with the base case and iterating rather that recursing.
 
+This can be used for any sequence where the value for n depends on preceding values.
+
 
 
 You can even go all out and feed Generator functions into Grunge.
@@ -83,12 +85,28 @@ var Primes = Grunge(function*(){
   for(let i = 2; true; i++){
     yeild Math.pow(2, i) - 1;
   }
-}).filter(isPrime).toArray();
+}).filter(isPrime).take(100).toArray();
 ```
 
 You could see how you can add a chain of filters instead of simple isPrime function to make it more performant.
 
+## Infinite Reduce
+
+Reducing an infinite sequence is usually impossible. Instead, for infinite sequences, using the reduce function with arguments (count, function, startValue) will give you a new sequence where every count values are reducing using your given function. Example to be added soon.
+
+## You can use it NOW!
+
+Using Facebook's regenerator, you can compile Grunge into code you can use today. You can choose to use the es5.js file on the client side. If you're using it in node, it's probably a better idea to compile it yourself.
+
+```
+var es5Source = require("regenerator")(require('grunge'));
+var es5SourceWithRuntime = require("regenerator")(require('grunge'), { includeRuntime: true });
+```
+
 ## Future
-Grunge is just a small tool right now, with very limited use-cases.
-I hope to add support for asynchronous computation in the future. It mostly comes down to design decisions, but with asynchronous results, parallel computation with web workers, and some smart users, Grunge could be a powerful niche tool.
+Grunge is a focussed but powerful tool, that is constantly getting better. Though it's currently is beta and has not been thoroughly tested, I will be adding tests and more features in the near future.
+I also hope to add some sort of asynchronous evaluation support to eliminate the need to use take methods on infinite sequences.
+
+Pull requests, contributions and feature requests are welcome. It's not too complicated so try to conform to the existing style. Deeper documentation will follow after Grunge is more stable.
+
 

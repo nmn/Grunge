@@ -58,7 +58,7 @@
     //if an array is passed in iterate over the elements.
     if(Array.isArray(start)){
       this.generator = function*(){
-        for(let i = 0; i < start.length; i++){
+        for(var i = 0; i < start.length; i++){
           yield start[i];
         }
       };
@@ -123,20 +123,7 @@
       throw new Error("skip takes a natural number");
     }
 
-
     var that = this;
-
-    // Old version with for-of loops
-    // var newGrunge = new Grunge(function* (){
-    //   var i = 0;
-    //   for(let elem of that.generator()){
-    //     i++;
-    //     if(i > num){
-    //       yield elem;
-    //     }
-    //   }
-    // });
-
 
     var newGrunge = new Grunge(function* (){
       try {
@@ -164,7 +151,7 @@
       newGrunge.length = Math.min(this.length - num, 0);
     }
     return newGrunge;
-  }
+  };
 
 
   Grunge.prototype.step = function(num){
@@ -179,11 +166,11 @@
     var newGrunge = new Grunge(function* (){
       var iterator = that.generator();
       while(true){
-        let elem = iterator.next();
-        let skipNumber = (typeof num === 'number')? num : num(elem.value, i);
+        var elem = iterator.next();
+        var skipNumber = (typeof num === 'number')? num : num(elem.value, i);
         i+= skipNumber;
-        for(let j = 0; j < skipNumber; j++){
-          let temp = iterator.next();
+        for(var j = 0; j < skipNumber; j++){
+          var temp = iterator.next();
           if(temp.done){
             elem.done = true;
             break;
@@ -210,13 +197,6 @@
     if(!func){
       return this;
     }
-    // Old version with for-of loops
-    // var newGrunge = new Grunge(function* (){
-    //   for(let elem of that.generator()){
-    //     yield func(elem);
-    //   }
-    // });
-
 
     var newGrunge = new Grunge(function* (){
       try {
@@ -244,14 +224,6 @@
     if(!func){
       return this;
     }
-    // Old version with For-of loops
-    // var newGrunge = new Grunge(function* (){
-    //   for(let elem of that.generator()){
-    //     if(!!func(elem)){
-    //       yield elem;
-    //     }
-    //   }
-    // });
 
     var newGrunge = new Grunge(function* (){
       try {
@@ -290,8 +262,8 @@
 
     var newGrunge = new Grunge(function* (){
       var iterator = that.generator();
-      for(let i = 0; i < num; i++){
-        let elem = iterator.next();
+      for(var i = 0; i < num; i++){
+        var elem = iterator.next();
         yield elem.value;
         if(elem.done){
           break;
@@ -310,7 +282,7 @@
       return this;
     }
     // old version with for-of loops
-    // for(let elem of this.generator()){
+    // for(var elem of this.generator()){
     //   func(elem);
     // }
 
@@ -378,7 +350,9 @@
 
   Grunge.prototype.toArray = function(){
     var result = [];
-    this.forEach(result.push.bind(result));
+    this.forEach(function (elem, index) {
+      result.push(elem);
+    });
     return result;
   };
 
