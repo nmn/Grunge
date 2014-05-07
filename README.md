@@ -92,7 +92,38 @@ You could see how you can add a chain of filters instead of simple isPrime funct
 
 ## Infinite Reduce
 
-Reducing an infinite sequence is usually impossible. Instead, for infinite sequences, using the reduce function with arguments (count, function, startValue) will give you a new sequence where every count values are reducing using your given function. Example to be added soon.
+Reducing an infinite sequence is usually impossible. Instead, for infinite sequences, using the reduce function with arguments (count, function, startValue) will give you a new sequence where every count values are reducing using your given function.
+
+```
+Grunge(1,1).take(10).toArray();
+// => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+Grunge(1,1).reduce(2, function(a,b){return a+b;}, 0).take(5).toArray();
+// => [3, 7, 11, 15, 19]
+// Every two elements have been added into a single element
+/*  [ 
+ *    (1, 2)  -> 3, 
+ *    (3, 4)  -> 7,
+ *    (5, 6)  -> 11, 
+ *    (7, 8)  -> 15,
+ *    (9, 10) -> 19
+ *  ]
+ */
+
+Grunge(1,1).reduce(3, function(a,b){return a+b;}, 0).take(4).toArray();
+// => [6, 15, 24, 33]
+// Every Three Elements this time
+/*  [ 
+ *    (1, 2, 3)    -> 6, 
+ *    (4, 5, 6)    -> 15,
+ *    (7, 8, 9)    -> 24,
+ *    (10, 11, 12) -> 33
+ *  ]
+ */
+```
+
+Mathematical Subsequences Made Easy!
+
 
 ## You can use it NOW!
 
