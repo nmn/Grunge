@@ -319,23 +319,23 @@
       if(!Grunge.isNaturalNumber(count)){
         throw new Error('the first argument must be a natural number for this to work');
       }
-      if(startValue === undefined){
-        startValue = this.generator().next().value;
-      }
+      
+      var myStartValue = startValue || this.generator().next().value;
+      var that = this;
       var newGrunge = new Grunge(function* () {
-        var iterator = this.generator();
-        var temp = startValue;
-        var lastValue;
+        var iterator = that.generator();
+        //var temp = myStartValue;
+        var lastValue = {value : myStartValue};
         while(true){
+          var temp = startValue !== undefined ? startValue : lastValue.value;
           for(var i = 0; i < count; i++){
             lastValue = iterator.next();
-            temp = func(lastValue.value, startValue);
+            temp = func(lastValue.value, temp);
             if(lastValue.done){
               break;
             }
           }
           yield temp;
-          temp = lastValue.value;
           if(lastValue.done){
             break;
           }

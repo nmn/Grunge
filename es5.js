@@ -941,49 +941,48 @@
       if(!Grunge.isNaturalNumber(count)){
         throw new Error('the first argument must be a natural number for this to work');
       }
-      if(startValue === undefined){
-        startValue = this.generator().next().value;
-      }
+      
+      var myStartValue = startValue || this.generator().next().value;
+      var that = this;
       var newGrunge = new Grunge(wrapGenerator.mark(function $callee() {
-        var iterator, temp, lastValue, i;
+        var iterator, lastValue, temp, i;
 
         return wrapGenerator(function $callee$($ctx9) {
           while (1) switch ($ctx9.prev = $ctx9.next) {
           case 0:
-            iterator = this.generator();
-            temp = startValue;
+            iterator = that.generator();
+            lastValue = {value : myStartValue};
           case 2:
             if (!true) {
               $ctx9.next = 19;
               break;
             }
 
+            temp = startValue !== undefined ? startValue : lastValue.value;
             i = 0;
-          case 4:
+          case 5:
             if (!(i < count)) {
-              $ctx9.next = 12;
+              $ctx9.next = 13;
               break;
             }
 
             lastValue = iterator.next();
-            temp = func(lastValue.value, startValue);
+            temp = func(lastValue.value, temp);
 
             if (!lastValue.done) {
-              $ctx9.next = 9;
+              $ctx9.next = 10;
               break;
             }
 
-            return $ctx9.abrupt("break", 12);
-          case 9:
+            return $ctx9.abrupt("break", 13);
+          case 10:
             i++;
-            $ctx9.next = 4;
+            $ctx9.next = 5;
             break;
-          case 12:
-            $ctx9.next = 14;
+          case 13:
+            $ctx9.next = 15;
             return temp;
-          case 14:
-            temp = lastValue.value;
-
+          case 15:
             if (!lastValue.done) {
               $ctx9.next = 17;
               break;
