@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/naman34/Grunge/issues"
   },
-  "homepage": "https://github.com/naman34/Grunge"
+  "homepage": "https://github.com/naman34/Grunge",
+  "devDependencies": {
+    "should": "^3.3.1"
+  }
 }
