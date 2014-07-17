@@ -274,6 +274,46 @@
     return newGrunge;
   };
 
+  Grunge.prototype.merge = function(){
+    var args = Array.prototype.map.call(arguments, function(arg){
+      return new Grunge(arg);
+    });
+    args.unshift(this);
+
+    // args.forEach(function(s){
+    //   console.log(s.toArray());
+    // });
+
+    var seqs = args.map(function(sequence){
+      return sequence.generator();
+    });
+    
+    var bool = true;
+    var newGrunge = new Grunge(function(){
+      while(bool){
+        bool = false;
+        var arr = seqs.map(function(gen){
+          var el = gen.next();
+          //console.log("test:", el);
+          yield el.value;
+          if(el.done){
+            break;
+          }
+        });
+      }
+    });
+    newGrunge.length = args.reduce(function(a,b){
+      if(a === undefined || b ===undefined){
+        return undefined;
+      } else {
+        return Math.max(a,b);
+      }
+    }, 0);
+    return newGrunge;
+  };
+
+
+
   Grunge.prototype.forEach = function(func){
     if(!this.length){
       throw new Error('Cannot Loop over infinite sequence');
@@ -301,6 +341,25 @@
     } catch (e){
       return e;
     }
+  };
+
+  Grunge.prototype.forEachAsync = function(func, time){
+    if(!func){
+      return this;
+    }
+    time = time || 0;
+
+    var iterator = this.generator();
+    var index = 0;
+    var callNext = function(){
+      var el = iterator.next();
+      func(el.value, index);
+      if(!el.done){
+        index++;
+        setTimeout(callNext, time);
+      }
+    };
+    callNext();
   };
 
   Grunge.prototype.reduce = function(count, func, startValue){
