@@ -124,6 +124,26 @@ Grunge(1,1).reduce(3, function(a,b){return a+b;}, 0).take(4).toArray();
 
 Mathematical Subsequences Made Easy!
 
+## forEachAsync - for limitless forEach
+
+The grunge .forEach method won't let you loop over a possibly infinite sequence to save you from infinite loops, and causing crashes, or worse, freezes.
+But you may not have a known upper limit of the number of elements you dealing with, or you may actually be dealing with an infinite amount of data.
+
+Now you can with forEachAsync.
+
+forEachAsync, let's you run a function over a grunge sequence of any or infinite length, it does this by only running one iteration per cycle of the event loop. It does this with a setTimeout after a period of 0. (I'm looking into setImmediate and process.nextTick) But you can also define your own time intervals.
+
+One interesting use is to use this like a buffer. You can create a grunge sequence based on an array and run and forEachAsync over that sequence over a certain period. Since Grunge sequence bind to the actual live array, you can add more elements to the array and keep running the funtion on it endlessly. (Be sure to empty previous elements in the array to save you from running out of memory)
+
+Since this function is completely asyncronous, there is also a callback function you can call when it's done.
+
+Enough talk. Here's the example.
+
+
+```
+var rps = = infiniteGrungeSequence.forEachAsync(yourFunction, timeDelay, callback);
+```
+
 
 ## You can use it NOW!
 
